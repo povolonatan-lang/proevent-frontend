@@ -16,28 +16,33 @@ const EventForm = ({ isEdit = false }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [categoriesError, setCategoriesError] = useState(false);
 
     useEffect(() => {
         const loadInitialData = async () => {
             try {
                 const { data: cats } = await getCategories();
-                setCategories(cats);
-                
-                if (isEdit && id) {
-                    const { data: event } = await getEvent(id);
-                    setFormData({
-                        title: event.title,
-                        description: event.description,
-                        date: new Date(event.date).toISOString().split('T')[0],
-                        location: event.location,
-                        category: event.category?._id || '',
-                        imageUrl: event.imageUrl || ''
-                    });
-                } else if (cats.length > 0) {
-                    setFormData(prev => ({ ...prev, category: cats[0]._id }));
+                if (!Array.isArray(cats) || cats.length === 0) {
+                    setCategoriesError(true);
+                } else {
+                    setCategories(cats);
+                    if (isEdit && id) {
+                        const { data: event } = await getEvent(id);
+                        setFormData({
+                            title: event.title,
+                            description: event.description,
+                            date: new Date(event.date).toISOString().split('T')[0],
+                            location: event.location,
+                            category: event.category?._id || '',
+                            imageUrl: event.imageUrl || ''
+                        });
+                    } else {
+                        setFormData(prev => ({ ...prev, category: cats[0]._id }));
+                    }
                 }
             } catch (err) {
-                setError('Failed to load data');
+                setCategoriesError(true);
+                setError('Could not connect to the server. Check your network connection.');
             }
         };
         loadInitialData();
@@ -80,15 +85,27 @@ const EventForm = ({ isEdit = false }) => {
                     </div>
                     <div className="form-group">
                         <label>Category</label>
+                        {categoriesError ? (
+                            <div className="alert-error" style={{fontSize:'0.85rem', padding:'0.5rem 0.75rem'}}>
+                                ⚠️ No categories found. Ask an admin to seed the database via
+                                <code style={{marginLeft:'4px', fontSize:'0.8rem'}}>
+                                    POST /api/categories/seed
+                                </code>
+                            </div>
+                        ) : (
                         <select 
                             required 
                             value={formData.category}
                             onChange={(e) => setFormData({...formData, category: e.target.value})}
                         >
+                            {categories.length === 0 && (
+                                <option value="" disabled>Loading categories…</option>
+                            )}
                             {categories.map(cat => (
                                 <option key={cat._id} value={cat._id}>{cat.name}</option>
                             ))}
                         </select>
+                        )}
                     </div>
                     <div className="form-group">
                         <label>Date</label>

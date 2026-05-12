@@ -48,29 +48,31 @@ const EventList = () => {
                     <p>You haven't created any events yet.</p>
                 </div>
             ) : (
-                <table className="dashboard-table">
-                    <thead>
-                        <tr>
-                            <th>Event Title</th>
-                            <th>Date</th>
-                            <th>Category</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {events.map(event => (
-                            <tr key={event._id}>
-                                <td>{event.title}</td>
-                                <td>{new Date(event.date).toLocaleDateString()}</td>
-                                <td>{event.category?.name}</td>
-                                <td className="table-actions">
-                                    <Link to={`/dashboard/edit-event/${event._id}`} className="btn-edit">Edit</Link>
-                                    <button onClick={() => handleDelete(event._id)} className="btn-delete">Delete</button>
-                                </td>
+                <div className="dashboard-table-container">
+                    <table className="dashboard-table">
+                        <thead>
+                            <tr>
+                                <th>Event Title</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {events.map(event => (
+                                <tr key={event._id}>
+                                    <td>{event.title}</td>
+                                    <td>{new Date(event.date).toLocaleDateString()}</td>
+                                    <td>{event.category?.name}</td>
+                                    <td className="table-actions">
+                                        <Link to={`/dashboard/edit-event/${event._id}`} className="btn-edit">Edit</Link>
+                                        <button onClick={() => handleDelete(event._id)} className="btn-delete">Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );

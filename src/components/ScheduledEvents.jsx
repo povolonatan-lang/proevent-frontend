@@ -211,8 +211,10 @@ const ScheduledEvents = () => {
                                     )}
                                 </td>
                                 <td className="event-cell">
-                                    <span className={`category-dot ${event.category.toLowerCase()}`}></span>
-                                    {event.evento}
+                                    <div className="event-cell-content">
+                                        <span className={`category-dot ${event.category.toLowerCase()}`}></span>
+                                        {event.evento}
+                                    </div>
                                 </td>
                                 <td className="location-cell">{event.lugar}</td>
                             </tr>

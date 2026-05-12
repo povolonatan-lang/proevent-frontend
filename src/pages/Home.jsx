@@ -22,7 +22,25 @@ const Home = () => {
         fetchEvents();
     }, []);
 
-    if (loading) return <div className="loader">Loading events...</div>;
+    if (loading) return (
+        <div className="home-page fade-in">
+            <header className="hero">
+                <div className="skeleton skeleton-title"></div>
+                <div className="skeleton skeleton-text"></div>
+            </header>
+            <div className="events-grid">
+                {[1, 2, 3, 4].map(n => (
+                    <div key={n} className="event-card skeleton-card">
+                        <div className="skeleton skeleton-img"></div>
+                        <div className="skeleton-info">
+                            <div className="skeleton skeleton-h3"></div>
+                            <div className="skeleton skeleton-p"></div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 
     return (
         <div className="home-page fade-in">

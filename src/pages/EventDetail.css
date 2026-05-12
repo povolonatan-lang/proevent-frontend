@@ -121,3 +121,25 @@
     font-size: 2rem;
   }
 }
+
+@media (max-width: 480px) {
+  .event-detail-page {
+    padding: 1rem;
+  }
+
+  .detail-header, .detail-body {
+    padding: 1.5rem;
+  }
+
+  .detail-img {
+    height: 200px;
+  }
+
+  .detail-summary h1 {
+    font-size: 1.5rem;
+  }
+
+  .join-btn {
+    width: 100%;
+  }
+}

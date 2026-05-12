@@ -55,9 +55,32 @@
   margin-bottom: 2rem;
 }
 
+.dashboard-table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar for dashboard tables */
+.dashboard-table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dashboard-table-container::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+}
+
+.dashboard-table-container::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
 .dashboard-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 600px;
 }
 
 .dashboard-table th {
@@ -148,9 +171,38 @@
   .sidebar-nav {
     flex-direction: row;
     overflow-x: auto;
+    padding: 1rem;
   }
   
+  .dashboard-content {
+    padding: 2rem;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .view-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .view-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
   }
 }

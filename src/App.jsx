@@ -12,7 +12,7 @@ import './styles/global.css';
 
 const ProtectedRoute = ({ children }) => {
     const { user } = useAuth();
-    if (!user) return <Navigate to="/login" />;
+    if (!user) return <Navigate to="/register" />;
     return children;
 };
 
@@ -24,11 +24,25 @@ function App() {
                     <Navbar />
                     <main>
                         <Routes>
-                            <Route path="/" element={<Home />} />
+                            <Route 
+                                path="/" 
+                                element={
+                                    <ProtectedRoute>
+                                        <Home />
+                                    </ProtectedRoute>
+                                } 
+                            />
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
                             <Route path="/verify-email" element={<VerifyEmail />} />
-                            <Route path="/event/:id" element={<EventDetail />} />
+                            <Route 
+                                path="/event/:id" 
+                                element={
+                                    <ProtectedRoute>
+                                        <EventDetail />
+                                    </ProtectedRoute>
+                                } 
+                            />
                             <Route 
                                 path="/dashboard/*" 
                                 element={
