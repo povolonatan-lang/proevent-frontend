@@ -33,7 +33,11 @@ export const AuthProvider = ({ children }) => {
     const register = async (userData) => {
         try {
             const { data } = await registerApi(userData);
-            return { success: true, message: data.message };
+            return { 
+                success: true, 
+                message: data.message, 
+                verificationToken: data.verificationToken 
+            };
         } catch (error) {
             return { 
                 success: false, 

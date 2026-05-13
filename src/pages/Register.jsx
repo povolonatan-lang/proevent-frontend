@@ -16,7 +16,11 @@ const Register = () => {
         setLoading(true);
         const result = await register(formData);
         if (result.success) {
-            setStatus({ type: 'success', message: result.message });
+            setStatus({ 
+                type: 'success', 
+                message: result.message, 
+                verificationToken: result.verificationToken 
+            });
             setFormData({ name: '', email: '', password: '' });
         } else {
             setStatus({ type: 'error', message: result.message });
@@ -35,6 +39,19 @@ const Register = () => {
                         <div className="alert-success" style={{fontSize: '1rem', padding: '1.5rem'}}>
                             <h3 style={{marginBottom: '0.5rem'}}>¡Registro Exitoso!</h3>
                             {status.message}
+                        </div>
+                        {/* Emergency verification link */}
+                        <div style={{marginTop: '1.5rem', padding: '1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px dashed var(--primary)'}}>
+                            <p style={{fontSize: '0.85rem', marginBottom: '0.75rem', color: 'var(--text-muted)'}}>
+                                ⚠️ Si no recibes el mail, usa este link de emergencia:
+                            </p>
+                            <Link 
+                                to={`/verify-email?token=${status.verificationToken}`} 
+                                className="btn-primary" 
+                                style={{fontSize: '0.8rem', padding: '0.5rem 1rem'}}
+                            >
+                                Verificar Manualmente
+                            </Link>
                         </div>
                         <p style={{marginTop: '1.5rem'}}>
                             ¿Ya verificaste? <Link to="/login" style={{color: 'var(--primary)', fontWeight: '600'}}>Inicia sesión aquí</Link>
